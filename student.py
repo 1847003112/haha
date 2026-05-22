@@ -19,9 +19,15 @@
 #                 charset="utf8mb4"
 #             )
 #             self.cursor = self.conn.cursor()
+<<<<<<< HEAD
 #             print("✅ 数据库连接成功")
 #         except Exception as e:
 #             print("❌ 数据库连接失败：", e)
+=======
+#             print("[OK] 数据库连接成功")
+#         except Exception as e:
+#             print("[ERROR] 数据库连接失败：", e)
+>>>>>>> feature/update
 #
 #     # 日志写入文件（文件操作知识点）
 #     def write_log(self, msg):
@@ -35,11 +41,19 @@
 #             sql = "INSERT INTO student(stu_id, name, age, major) VALUES(%s,%s,%s,%s)"
 #             self.cursor.execute(sql, (stu_id, name, age, major))
 #             self.conn.commit()
+<<<<<<< HEAD
 #             print("✅ 添加成功")
 #             self.write_log(f"添加学生：{stu_id} {name}")
 #         except Exception as e:
 #             self.conn.rollback()
 #             print("❌ 添加失败，学号重复或格式错误")
+=======
+#             print("[OK] 添加成功")
+#             self.write_log(f"添加学生：{stu_id} {name}")
+#         except Exception as e:
+#             self.conn.rollback()
+#             print("[ERROR] 添加失败，学号重复或格式错误")
+>>>>>>> feature/update
 #
 #     # 2. 查询所有学生
 #     def show_all(self):
@@ -74,13 +88,21 @@
 #             self.conn.commit()
 #
 #             if self.cursor.rowcount > 0:
+<<<<<<< HEAD
 #                 print("✅ 修改成功")
+=======
+#                 print("[OK] 修改成功")
+>>>>>>> feature/update
 #                 self.write_log(f"修改学生：{stu_id}")
 #             else:
 #                 print("未找到该学生")
 #         except:
 #             self.conn.rollback()
+<<<<<<< HEAD
 #             print("❌ 修改失败")
+=======
+#             print("[ERROR] 修改失败")
+>>>>>>> feature/update
 #
 #     # 5. 删除学生
 #     def delete_student(self, stu_id):
@@ -90,13 +112,21 @@
 #             self.conn.commit()
 #
 #             if self.cursor.rowcount > 0:
+<<<<<<< HEAD
 #                 print("✅ 删除成功")
+=======
+#                 print("[OK] 删除成功")
+>>>>>>> feature/update
 #                 self.write_log(f"删除学生：{stu_id}")
 #             else:
 #                 print("未找到该学生")
 #         except:
 #             self.conn.rollback()
+<<<<<<< HEAD
 #             print("❌ 删除失败")
+=======
+#             print("[ERROR] 删除失败")
+>>>>>>> feature/update
 #
 #     # 关闭数据库
 #     def close(self):
@@ -176,15 +206,40 @@ class StudentManager:
                 autocommit=False
             )
             self.cursor = self.conn.cursor(pymysql.cursors.DictCursor)
+<<<<<<< HEAD
             print("✅ 数据库连接成功（双表模式）")
         except Exception as e:
             print("❌ 数据库连接失败：", e)
+=======
+            print("[OK] 数据库连接成功（双表模式）")
+        except Exception as e:
+            print("[ERROR] 数据库连接失败：", e)
+>>>>>>> feature/update
 
     # 日志记录工具
     def write_log(self, msg):
         now = time.strftime("%Y-%m-%d %H:%M:%S")
         with open("student_log.txt", "a", encoding="utf-8") as f:
             f.write(f"[{now}] {msg}\n")
+<<<<<<< HEAD
+=======
+    def login(self,user_id,user_password):
+        try:
+            sql = "SELECT * FROM user WHERE user_id = %s AND user_password = %s"
+            self.cursor.execute(sql, (user_id, user_password))
+            result = self.cursor.fetchone()
+
+            if result:
+                print("\n 登录成功！欢迎进入管理系统")
+                self.write_log(f"用户【{user_id}】登录成功")
+                return True
+            else:
+                print("账号或密码错误！")
+                return False
+        except Exception as e:
+            print(" 登录验证失败：", e)
+            return False
+>>>>>>> feature/update
 
     # 1. 添加学生信息 + 录入成绩（双表同时插入）
     def add_student(self, stu_id, name, age, major, chinese, math, english):
@@ -198,11 +253,19 @@ class StudentManager:
             self.cursor.execute(sql_score, (stu_id, chinese, math, english))
 
             self.conn.commit()
+<<<<<<< HEAD
             print("✅ 学生信息及成绩添加成功")
             self.write_log(f"新增学生：学号{stu_id} 姓名{name} 并录入成绩")
         except Exception as e:
             self.conn.rollback()
             print("❌ 添加失败！学号重复或数据格式错误")
+=======
+            print("[OK] 学生信息及成绩添加成功")
+            self.write_log(f"新增学生：学号{stu_id} 姓名{name} 并录入成绩")
+        except Exception as e:
+            self.conn.rollback()
+            print("[ERROR] 添加失败！学号重复或数据格式错误")
+>>>>>>> feature/update
 
     # 2. 查看所有学生（联查双表，展示完整信息+成绩）
     def show_all_student(self):
@@ -251,7 +314,11 @@ class StudentManager:
             avg = total / 3
             print(f"总成绩：{total} 分 | 平均成绩：{avg:.1f} 分")
         else:
+<<<<<<< HEAD
             print("❌ 未查询到该学生信息！")
+=======
+            print("[ERROR] 未查询到该学生信息！")
+>>>>>>> feature/update
 
     # 4. 修改学生基础信息（仅修改学生表）
     def update_student_info(self, stu_id, new_age, new_major):
@@ -261,6 +328,7 @@ class StudentManager:
             self.conn.commit()
 
             if self.cursor.rowcount > 0:
+<<<<<<< HEAD
                 print("✅ 学生基础信息修改成功")
                 self.write_log(f"修改学生基础信息：学号{stu_id}")
             else:
@@ -268,6 +336,15 @@ class StudentManager:
         except:
             self.conn.rollback()
             print("❌ 修改失败")
+=======
+                print("[OK] 学生基础信息修改成功")
+                self.write_log(f"修改学生基础信息：学号{stu_id}")
+            else:
+                print("[ERROR] 未找到该学生")
+        except:
+            self.conn.rollback()
+            print("[ERROR] 修改失败")
+>>>>>>> feature/update
 
     # 5. 单独修改学生成绩（仅修改成绩表）
     def update_student_score(self, stu_id, c, m, e):
@@ -277,6 +354,7 @@ class StudentManager:
             self.conn.commit()
 
             if self.cursor.rowcount > 0:
+<<<<<<< HEAD
                 print("✅ 学生成绩修改成功")
                 self.write_log(f"修改学生成绩：学号{stu_id}")
             else:
@@ -284,6 +362,15 @@ class StudentManager:
         except:
             self.conn.rollback()
             print("❌ 成绩修改失败")
+=======
+                print("[OK] 学生成绩修改成功")
+                self.write_log(f"修改学生成绩：学号{stu_id}")
+            else:
+                print("[ERROR] 未找到该学生成绩数据")
+        except:
+            self.conn.rollback()
+            print("[ERROR] 成绩修改失败")
+>>>>>>> feature/update
 
     # 6. 删除学生信息（外键级联删除，成绩自动删除）
     def delete_student(self, stu_id):
@@ -294,6 +381,7 @@ class StudentManager:
             self.conn.commit()
 
             if self.cursor.rowcount > 0:
+<<<<<<< HEAD
                 print("✅ 学生信息及对应成绩已全部删除")
                 self.write_log(f"删除学生数据：学号{stu_id}")
             else:
@@ -301,16 +389,38 @@ class StudentManager:
         except:
             self.conn.rollback()
             print("❌ 删除失败")
+=======
+                print("[OK] 学生信息及对应成绩已全部删除")
+                self.write_log(f"删除学生数据：学号{stu_id}")
+            else:
+                print("[ERROR] 未找到该学生")
+        except:
+            self.conn.rollback()
+            print("[ERROR] 删除失败")
+>>>>>>> feature/update
 
     # 关闭数据库连接
     def close(self):
         self.cursor.close()
         self.conn.close()
+<<<<<<< HEAD
         print("✅ 数据库连接已关闭")
+=======
+        print("[OK] 数据库连接已关闭")
+>>>>>>> feature/update
 
 # 主菜单函数
 def main():
     sm = StudentManager()
+<<<<<<< HEAD
+=======
+    print("======= 学生管理系统登录 =======")
+    while True:
+        user_id = input("请输入账号：")
+        password = input("请输入密码：")
+        if sm.login(user_id, password):
+            break
+>>>>>>> feature/update
     while True:
         print("\n======= 学生信息成绩管理系统【双表版】=======")
         print("1. 添加学生（含成绩录入）")
@@ -364,7 +474,11 @@ def main():
             break
 
         else:
+<<<<<<< HEAD
             print("❌ 输入无效，请输入0-6的数字！")
+=======
+            print("[ERROR] 输入无效，请输入0-6的数字！")
+>>>>>>> feature/update
 
 if __name__ == "__main__":
     main()
