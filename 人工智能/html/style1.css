@@ -1,0 +1,26 @@
+p{
+    font-size: 28px;
+    line-height: 1.8;
+    color: #080808a9;
+}
+nav{
+    background:hsla(203, 98%, 49%, 0.868);
+    padding: 10px;
+}
+ul{
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    padding-left: 0;
+}
+.skill-tag:nth-child(2) {
+    background: #0f6eae;
+}
+section h2 ::before{
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #22c8c8;
+    margin-right: 5px;
+}

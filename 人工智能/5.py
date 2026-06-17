@@ -1,0 +1,41 @@
+import numpy as np
+np.random.seed(10)
+n=50
+ids=np.arange(1,n+1)
+math=np.clip(np.round(np.random.normal(75,15,n)),0,100).astype(int)
+eng= np.clip(np.round(np.random.normal(78,12,n)),0,100).astype(int)
+chi=np.clip(np.round(np.random.normal(75,15,n)),0,100).astype(int)
+garades=np.column_stack((math,eng,chi))
+student_data=np.column_stack((ids,math,eng,chi))
+print(student_data)
+# a=garades.max(axis=0)
+# print('各科最高分:',a)
+# b=garades.min(axis=0)
+# print('各科最低分:',b)
+# c=garades.mean(axis=0)
+# print('各科平均分:',c)
+# d=garades.mean(axis=1)
+e=garades.sum(axis=1)
+# d_rounded = np.round(d, 2)
+# e_rounded = np.round(e, 2)   
+# student_data1 = np.column_stack((ids, d_rounded, e_rounded))
+# print('每人的平均分和总分:\n', student_data1)
+# e_max=e.max()
+# top_student =student_data[e == e_max]
+# print('总分最高的学生:',top_student)
+# m =np.any(garades < 60,axis=1)
+# x = student_data[m]       
+# print('挂科学生:\n',x)
+rank_data = np.column_stack((student_data, e))
+rank_data = rank_data[np.argsort(-e)]
+# print('按总分排名:\n',rank_data)
+n=(math>85)&(eng>90)
+m=student_data[n] 
+print('优秀学生:\n',m)
+x=np.clip(math+5,0,100)
+student_data2=np.column_stack((ids,x,eng,chi))
+print(student_data2)
+sorted_indices = np.argsort(-e)
+top10_total = e[sorted_indices[:10]]
+avg_top10_total = np.mean(top10_total)
+print(f"总分前十名的平均分：{avg_top10_total:.2f}")

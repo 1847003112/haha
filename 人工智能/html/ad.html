@@ -1,0 +1,160 @@
+<!-- <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<style>
+/* 1. 全局定义变量 */
+:root {
+    --primary: #eb7e25;
+    --text-muted: #079eef;
+    --radius:18px;
+    --shadow: 0 4px 24px rgba(51, 245, 12, 0.08);
+}
+/* 2. 使用变量 */
+.card {
+    width: 300px;
+    padding: 24px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    background: #e218b6;
+}
+.tip-text {
+    color: var(--text-muted);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+}
+</style>
+</head>
+<body>
+<div class="card">
+    <p class="tip-text">辅助灰色文字</p>
+    <button class="btn-primary">主色调按钮</button>
+</div>
+</body>
+</html> -->
+<!-- 渐变 + 阴影 + 过渡 -->
+ <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>渐变/阴影/过渡完整示例</title>
+    <style>
+        /* 全局初始化：统一盒模型，清除默认内外边距 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ========== 1. 线性渐变：简历头部渐变背景 ========== */
+        .resume-header {
+            width: 90%;
+            margin: 30px auto; /* 上下外边距30px，左右自动居中 */
+            padding: 40px;     /* 内部留白 */
+            /* linear-gradient(角度，起始色 0%，结束色 100%) 线性渐变 */
+            background: linear-gradient(135deg, #dbddce 0%, #edc33a 100%);
+            color: white;      /* 文字白色 */
+            border-radius: 16px;/* 圆角 */
+        }
+
+        /* 文字渐变效果专属样式 */
+        .name-title {
+            /* 给文字容器设置横向渐变背景 */
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            /* webkit内核专属：将背景裁剪到文字区域，只有文字位置能显示背景 */
+            -webkit-background-clip: text;
+            /* webkit内核专属：文字设置透明，透出底层渐变背景 */
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem; /* 字号放大 */
+            font-weight: 800;  /* 文字加粗 */
+            margin-bottom: 10px;/* 和下方段落拉开间距 */
+        }
+
+        /* ========== 2. 卡片阴影+悬浮上浮过渡动画 ========== */
+        .card-wrap {
+            width: 90%;         /* 占父容器90%宽度，自适应屏幕 */
+            margin: 0 auto 30px; /* 顶部无间距、水平居中、底部留出30px空白 */
+            display: flex;      /* 开启弹性布局，卡片横向并排 */
+            gap: 20px;          /* 卡片之间统一间距 */
+        }
+        .project-card {
+            flex: 1;            /* 两张卡片平分宽度 */
+            padding: 30px;     /* 卡片内边距 */
+            border-radius: 12px;/* 卡片圆角 */
+            /* box-shadow: 水平偏移 垂直偏移 模糊大小 颜色(透明度) */
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+            /* transition: 给transform、box-shadow两个属性添加0.3秒平滑过渡动画 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;   /* 卡片白色底色 */
+        }
+        /* 鼠标悬浮卡片触发样式变化 */
+        .project-card:hover {
+            /* transform: translateY(-4px) 元素向上位移4px，实现上浮效果 */
+            transform: translateY(-4px);
+            /* 悬浮时阴影变大、加深，强化立体悬浮感 */
+            box-shadow: 0 12px 32px rgba(0,0,0,.12);
+        }
+
+        /* ========== 3. 技能进度条过渡动画 ========== */
+        .skill-box {
+            width: 90%;
+            margin: 0 auto;
+        }
+        /* 进度条底层灰色背景轨道 */
+        .skill-bar {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin: 10px 0 25px;
+        }
+        /* 进度条填充色块 */
+        .skill-bar-fill {
+            height: 8px;
+            /* 横向蓝紫渐变填充 */
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            border-radius: 4px;
+            width: 10%; /* 初始宽度为0，进度完全隐藏 */
+            /* width属性发生变化时，执行1秒缓出平滑过渡 */
+            transition: width 1s ease-out;
+        }
+        /* 添加animated类后，宽度变为85%，自动播放拉长动画 */
+        .skill-bar-fill:hover {
+            width: 85%;
+        }
+    </style>
+</head>
+<body>
+    <!-- 渐变背景区块 + 渐变文字标题演示 -->
+    <div class="resume-header">
+        <h2 class="name-title">前端开发工程师</h2>
+        <p>姓名：小王 | 熟练掌握HTML/CSS/JS 视觉动效开发</p>
+    </div>
+
+    <!-- 卡片阴影、hover上浮过渡效果演示 -->
+    <div class="card-wrap">
+        <div class="project-card">
+            <h3>企业官网项目</h3>
+            <p>使用Flex布局、渐变、阴影完成页面视觉优化</p>
+        </div>
+        <div class="project-card">
+            <h3>后台管理系统</h3>
+            <p>进度条动画、卡片悬浮交互完整落地</p>
+        </div>
+    </div>
+
+    <!-- 渐变进度条过渡动画演示 -->
+    <div class="skill-box">
+        <h3>CSS 掌握程度</h3>
+        <!-- 底层轨道 -->
+        <div class="skill-bar">
+            <!-- 填充条，自带animated类，页面加载自动播放动画 -->
+            <div class="skill-bar-fill animated"></div>
+        </div>
+    </div>
+</body>
+</html>

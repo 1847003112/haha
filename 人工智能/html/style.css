@@ -1,0 +1,51 @@
+/* ① 用类选择器为每个 section 设置不同背景色 */
+.section-intro {
+    background-color: #f0f8ff;   /* 淡蓝 */
+}
+.section-skills {
+    background-color: #f5f5dc;   /* 米白 */
+}
+.section-contact {
+    background-color: #ffe4e1;   /* 浅粉红 */
+}
+
+/* ② 用 nav a:hover 为导航链接加悬停颜色变化效果 */
+nav a {
+    color: #333;
+    text-decoration: none;
+    padding: 4px 8px;
+    transition: color 0.3s;      /* 让过渡更平滑 */
+}
+nav a:hover {
+    color: #ff6347;              /* 番茄红 */
+}
+
+/* ③ 用 ::before 伪元素给 h2 标题加装饰条 */
+h2 {
+    position: relative;
+    padding-left: 20px;          /* 给装饰条留出空间 */
+}
+h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 80%;
+    background-color: #4169e1;   /* 皇家蓝 */
+    border-radius: 3px;
+}
+
+/* ④ 用 :nth-child() 让技能列表奇偶行交替颜色 */
+.skills-list li:nth-child(odd) {
+    background-color: #e6f7ff;   /* 淡蓝灰 */
+}
+.skills-list li:nth-child(even) {
+    background-color: #fffbe6;   /* 淡米黄 */
+}
+/* 为了让列表看起来更整齐，加一点内边距 */
+.skills-list li {
+    padding: 6px 12px;
+    list-style-type: none;
+}
