@@ -1,0 +1,90 @@
+# 全栈一键启动：后端 + 前端 + 中间件（可与你本地的开发环境并存）
+#
+# 用法：
+#   docker compose -f docker-compose.full.yml up -d --build
+#   浏览器打开 http://localhost:8088
+#
+# 说明：
+#   - 不设 container_name，由 compose 自动命名（避免与本地 rag-* 容器冲突）
+#   - 宿主机端口：后端 8002（映射容器 8000）、前端 8088（映射容器 80）
+#   - 首次构建较重（需装 torch 等），请耐心等待
+#   - 数据存于命名 volume，删除容器不丢数据
+
+name: enterprise-kb-full
+
+services:
+  app:
+    build: .
+    env_file: .env
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: "3306"
+      MILVUS_HOST: milvus
+      MILVUS_PORT: "19530"
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./data:/app/data
+      - ./SmartQuery/model/.cache:/app/SmartQuery/model/.cache
+    depends_on:
+      - mysql
+      - milvus
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8088:80"
+    depends_on:
+      - app
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-123456}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-smart_query}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.18
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+      - ETCD_SNAPSHOT_COUNT=50000
+    command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+    volumes:
+      - etcd_data:/etcd
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:RELEASE.2023-03-20T20-16-18Z
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    restart: unless-stopped
+
+  milvus:
+    image: milvusdb/milvus:v2.6.13
+    environment:
+      ETCD_ENDPOINTS: etcd:2379
+      MINIO_ADDRESS: minio:9000
+    command: milvus run standalone
+    depends_on:
+      - etcd
+      - minio
+    volumes:
+      - milvus_data:/var/lib/milvus
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  etcd_data:
+  minio_data:
+  milvus_data:
