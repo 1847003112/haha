@@ -1,0 +1,31 @@
+# === 环境变量 / 密钥(绝不能提交真实 key)===
+.env
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# === 运行时数据 / 生成物 ===
+backend/logs/
+backend/uploads/
+backend/workspace/
+backend/chroma_data/
+*.log
+
+# === 前端 ===
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# === IDE / 系统 ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
